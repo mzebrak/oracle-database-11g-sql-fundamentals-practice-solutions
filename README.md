@@ -23,8 +23,8 @@ Feel free to use and if u have any suggestions don't hesitate to contact me . ðŸ
 1. The following ***SELECT*** statement executes successfully:
    ```sql
    SELECT last_name,
-       job_id,
-       salary AS Sal
+          job_id,
+          salary AS Sal
    FROM employees;
    ```
    **Answer:** True
@@ -60,9 +60,9 @@ Feel free to use and if u have any suggestions don't hesitate to contact me . ðŸ
 6. Test your query in the ***lab_01_05.sql*** file to ensure that it runs correctly.
    ```sql
    SELECT employee_id,
-       last_name,
-       job_id,
-       hire_date startdate
+          last_name,
+          job_id,
+          hire_date startdate
    FROM employees;
    ```
 
@@ -77,9 +77,9 @@ Feel free to use and if u have any suggestions don't hesitate to contact me . ðŸ
    Date*** respectively. Then run your query again.
    ```sql
    SELECT employee_id "Emp #",
-       last_name   "Employee",
-       job_id      "Job",
-       hire_date   "Hire Date"
+          last_name   "Employee",
+          job_id      "Job",
+          hire_date   "Hire Date"
    FROM employees;
    ```
 
@@ -87,7 +87,7 @@ Feel free to use and if u have any suggestions don't hesitate to contact me . ðŸ
    the job ID (separated by a comma and space) and name the column ***Employee and Title***.
    ```sql
    SELECT last_name ||
-       ', ' || job_id "Emplpoyee and Title"
+          ', ' || job_id "Employee and Title"
    FROM employees;
    ```
 
@@ -95,23 +95,56 @@ Feel free to use and if u have any suggestions don't hesitate to contact me . ðŸ
     the ***EMPLOYEES*** table. Separate each column output with a comma. Name the column as ***THE_OUTPUT***.
    ```sql
    SELECT employee_id ||
-       ',' ||
-       first_name ||
-       ',' ||
-       last_name ||
-       ',' ||
-       email ||
-       ',' ||
-       phone_number ||
-       ',' ||
-       job_id ||
-       ',' ||
-       manager_id ||
-       ',' ||
-       hire_date ||
-       ',' ||
-       commission_pct ||
-       ',' ||
-       department_id the_output
-FROM employees;
+          ',' ||
+          first_name ||
+          ',' ||
+          last_name ||
+          ',' ||
+          email ||
+          ',' ||
+          phone_number ||
+          ',' ||
+          job_id ||
+          ',' ||
+          manager_id ||
+          ',' ||
+          hire_date ||
+          ',' ||
+          commission_pct ||
+          ',' ||
+          department_id the_output
+   FROM employees;
    ```
+
+## Practice 2
+
+1. Because of budget issues, the HR department needs a report that displays the last name and salary of employees who
+   earn more than $12,000. Save your SQL statement as a file named
+   ***lab_02_01.sql***. Run your query.
+   ```sql
+   SELECT last_name,
+          salary
+   FROM employees
+   WHERE salary > 12000;
+   ```
+
+
+2. Open a new SQL Worksheet. Create a report that displays the last name and department number for employee number 176.
+   Run the query.
+    ```sql
+   SELECT last_name,
+          department_id
+   FROM employees
+   WHERE employee_id = 176;
+   ```
+
+3. The HR department needs to find high-salary and low-salary employees. Modify ***lab_02_01.sql*** to display the last
+   name and salary for any employee whose salary is not in the range of $5,000 to $12,000. Save your SQL statement
+   as ***lab_02_03.sql***.
+   ```sql
+   SELECT last_name, 
+          salary
+   FROM employees
+   WHERE salary NOT BETWEEN 5000 AND 12000;
+   ```
+
