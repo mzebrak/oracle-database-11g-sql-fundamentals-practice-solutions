@@ -21,7 +21,7 @@ Feel free to use and if u have any suggestions don't hesitate to contact me . ðŸ
 ### Part 1
 
 1. The following ***SELECT*** statement executes successfully:
-   ```oraclesqlplus
+   ```sql
    SELECT last_name,
        job_id,
        salary AS Sal
@@ -46,19 +46,19 @@ Feel free to use and if u have any suggestions don't hesitate to contact me . ðŸ
 ### Part 2
 
 4. Your first task is to determine the ***DEPARTMENTS*** structure of the table and its contents.
-   ```oraclesqlplus
+   ```sql
    DESCRIBE departments;
    SELECT *
    FROM departments;
    ```
 
 5. You need to determine the structure of the ***EMPLOYEES*** table.
-   ```oraclesqlplus
+   ```sql
    DESCRIBE employees;
    ```
 
 6. Test your query in the ***lab_01_05.sql*** file to ensure that it runs correctly.
-   ```oraclesqlplus
+   ```sql
    SELECT employee_id,
        last_name,
        job_id,
@@ -67,7 +67,7 @@ Feel free to use and if u have any suggestions don't hesitate to contact me . ðŸ
    ```
 
 7. The HR department wants a query to display all unique job IDs from the ***EMPLOYEES*** table.
-   ```oraclesqlplus
+   ```sql
    SELECT DISTINCT job_id
    FROM employees;   
    ```
@@ -75,7 +75,7 @@ Feel free to use and if u have any suggestions don't hesitate to contact me . ðŸ
 8. The HR department wants more descriptive column headings for its report on employees. Copy the statement from ***
    lab_01_05.sql*** to a new SQL Worksheet. Name the column headings ***Emp#***, ***Employee***, ***Job*** and ***Hire
    Date*** respectively. Then run your query again.
-   ```oraclesqlplus
+   ```sql
    SELECT employee_id "Emp #",
        last_name   "Employee",
        job_id      "Job",
@@ -85,7 +85,7 @@ Feel free to use and if u have any suggestions don't hesitate to contact me . ðŸ
 
 9. The HR department has requested a report of all employees and their job IDs. Display the last name concatenated with
    the job ID (separated by a comma and space) and name the column ***Employee and Title***.
-   ```oraclesqlplus
+   ```sql
    SELECT last_name ||
        ', ' || job_id "Emplpoyee and Title"
    FROM employees;
@@ -93,7 +93,7 @@ Feel free to use and if u have any suggestions don't hesitate to contact me . ðŸ
 
 10. To familiarize yourself with the data in the ***EMPLOYEES*** table, create a query to display all the data from
     the ***EMPLOYEES*** table. Separate each column output with a comma. Name the column as ***THE_OUTPUT***.
-   ```oraclesqlplus
+   ```sql
    SELECT employee_id ||
        ',' ||
        first_name ||
