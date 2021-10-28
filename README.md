@@ -148,3 +148,123 @@ Feel free to use and if u have any suggestions don't hesitate to contact me . ðŸ
    WHERE salary NOT BETWEEN 5000 AND 12000;
    ```
 
+4. Create a report to display the last name, job ID, and hire date for employees with the last names of Matos and
+   Taylor. Order the query in ascending order by the hire date.
+   ```sql
+   SELECT last_name,
+          job_id,
+          hire_date
+   FROM employees
+   WHERE last_name IN ('Matos', 'Taylor')
+   ORDER BY hire_date;
+   ```
+
+5. Display the last name and department ID of all employees in departments 20 or 50 in ascending alphabetical order by
+   name.
+   ```sql
+   SELECT last_name,
+          department_id
+   FROM employees
+   WHERE department_id IN (20, 50)
+   ORDER BY last_name;
+   ```
+
+6. Modify ***lab_02_03.sql*** to display the last name and salary of employees who earn between $5,000 and $12,000, and
+   are in department 20 or 50. Label the columns ***Employee*** and
+   ***Monthly Salary***, respectively. Resave ***lab_02_03.sql*** as ***lab_02_06.sql***. Run the statement in ***
+   lab_02_06.sql***
+   ```sql
+   SELECT last_name "Employee",
+          salary    "Monthly Salary"
+   FROM employees
+   WHERE salary BETWEEN 5000 AND 12000
+   AND department_id IN (20, 50)
+   ORDER BY last_name;
+   ```
+
+7. The HR department needs a report that displays the last name and hire date for all employees who were hired in 1994.
+   ```sql
+   SELECT last_name,
+          hire_date
+   FROM employees
+   WHERE hire_date LIKE '94%';
+   ```
+
+8. Create a report to display the last name and job title of all employees who do not have a manager.
+   ```sql
+   SELECT last_name,
+          job_id
+   FROM employees
+   WHERE manager_id IS NULL;
+   ```
+
+9. Create a report to display the last name, salary, and commission of all employees who earn commissions. Sort data in
+   descending order of salary and commissions. Use the column's numeric position in the ***ORDER BY*** clause.
+   ```sql
+   SELECT last_name,
+          salary,
+          commission_pct
+   FROM employees
+   WHERE commission_pct IS NOT NULL
+   ORDER BY 2 DESC, 3 DESC;
+   ```
+
+10. Members of the HR department want to have more flexibility with the queries that you are writing. They would like a
+    report that displays the last name and salary of employees who earn more than an amount that the user specifies
+    after a prompt. Save this query to a file named ***lab_02_10.sql***. If you enter ***12000*** when prompted, the
+    report displays the following results:
+   ```sql
+   SELECT last_name,
+          salary
+   FROM employees
+   WHERE salary > &salary;
+   ```
+
+11. The HR department wants to run reports based on a manager. Create a query that prompts the user for a manager ID and
+    generates the employee ID, last name, salary, and department for that manager's employees. The HR department wants
+    the ability to sort the report on a selected column. You can test the data with the following values:
+   ```sql
+   SELECT employee_id,
+          last_name,
+          salary,
+          department_id
+   FROM employees
+   WHERE manager_id = &manager_id
+   ORDER BY &order_col;
+   ```
+
+12. Display all employee last names in which the third letter of the name is "a".
+   ```sql
+   SELECT last_name
+   FROM employees
+   WHERE last_name LIKE '__a%';
+   ```
+
+13. Display the last names of all employees who have both an "a" and an "e" in their last name.
+   ```sql
+   SELECT last_name
+   FROM employees
+   WHERE last_name LIKE '%a%'
+     AND last_name LIKE '%e%';
+   ```
+
+14. Display the last name, job, and salary for all employees whose jobs are either those of a sales representative or of
+    a stock clerk, and whose salaries are not equal to $2,500, $3,500, or $7,000.
+   ```sql
+   SELECT last_name,
+          job_id,
+          salary
+   FROM employees
+   WHERE job_id IN ('SA_REP', 'ST_CLERK')
+     AND salary NOT IN (2500, 3500, 7000);
+   ```
+
+15. Modify  ***lab_02_06.sql*** to display the last name, salary, and commission for all employees whose commission is
+    20%. Resave ***lab_02_06.sql*** as ***lab_02_15.sql***. Rerun the statement in ***lab_02_15.sql***.
+   ```sql
+   SELECT last_name "Employee",
+          salary    "Monthly Salary",
+          commission_pct
+   FROM employees
+   WHERE commission_pct = .2;
+   ```
