@@ -93,28 +93,28 @@ Feel free to use and if u have any suggestions don't hesitate to contact me . ðŸ
 
 10. To familiarize yourself with the data in the ***EMPLOYEES*** table, create a query to display all the data from
     the ***EMPLOYEES*** table. Separate each column output with a comma. Name the column as ***THE_OUTPUT***.
-   ```sql
-   SELECT employee_id ||
-          ',' ||
-          first_name ||
-          ',' ||
-          last_name ||
-          ',' ||
-          email ||
-          ',' ||
-          phone_number ||
-          ',' ||
-          job_id ||
-          ',' ||
-          manager_id ||
-          ',' ||
-          hire_date ||
-          ',' ||
-          commission_pct ||
-          ',' ||
-          department_id the_output
-   FROM employees;
-   ```
+    ```sql
+    SELECT employee_id ||
+           ',' ||
+           first_name ||
+           ',' ||
+           last_name ||
+           ',' ||
+           email ||
+           ',' ||
+           phone_number ||
+           ',' ||
+           job_id ||
+           ',' ||
+           manager_id ||
+           ',' ||
+           hire_date ||
+           ',' ||
+           commission_pct ||
+           ',' ||
+           department_id the_output
+    FROM employees;
+    ```
 
 ## Practice 2
 
@@ -131,7 +131,7 @@ Feel free to use and if u have any suggestions don't hesitate to contact me . ðŸ
 
 2. Open a new SQL Worksheet. Create a report that displays the last name and department number for employee number 176.
    Run the query.
-    ```sql
+   ```sql
    SELECT last_name,
           department_id
    FROM employees
