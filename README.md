@@ -398,10 +398,85 @@ This practice covers the following topics:
 9. Create a query to display the last name and the number of weeks employed for all employees in department 90. Label
    the number of weeks column as ***TENURE***. Truncate the number of weeks value to 0 decimal places. Show the records
    in descending order of the employees tenure.
-    ```sql
-    SELECT last_name,
+   ```sql
+   SELECT last_name,
           trunc((sysdate - hire_date) / 7) tenure
    FROM employees
    WHERE department_id = 90
    ORDER BY tenure DESC;
+    ```
+
+### Practice 4
+
+This practice covers the following topics:
+> 1. Creating queries that use `TO_CHAR`, `TO_DATE`, and other `DATE` functions
+> 2. Creating queries that use conditional expressions such as `DECODE` and `CASE`
+
+***
+
+1. Create a report that produces the following for each employee:
+   ***<employee last name\> earns <salary> monthly but wants <3 times salary\>***. Label the column ***Dream Salaries***
+   .
+   ```sql
+   SELECT last_name ||
+          ' earns $' ||
+          to_char (salary, 'FM99,999.00') ||
+          ' monthly but wants $' ||
+          to_char (salary * 3, 'FM99,999.00') "Dream Salaries"
+   FROM employees;
+    ```
+
+2. Display each employees last name, hire date, and salary review date, which is the first Monday after six months of
+   service. Label the column ***REVIEW***. Format the dates to appear in the format similar to Monday, the Thirty-First
+   of July, 2000.
+   ```sql
+   SELECT last_name,
+          hire_date,
+          to_char (next_day (add_months (hire_date, 6), 1), 'FMDAY, "the" DDSPTH "of" MONTH, YYYY') review
+   FROM employees;
+    ```
+
+3. Display the last name, hire date, and day of the week on which the employee started. Label the column ***DAY***.
+   Order the results by the day of the week, starting with Monday.
+   ```sql
+   SELECT last_name,
+          hire_date,
+          to_char (hire_date, 'FMDAY') day
+   FROM employees
+   ORDER BY to_char (hire_date, 'D');
+    ```
+
+4. Create a query that displays the employees last names and commission amounts. If an employee does not earn
+   commission, show No Commission. Label the column ***COMM***.
+   ```sql
+   SELECT last_name,
+          nvl (to_char (commission_pct), 'No Commission') comm
+   FROM employees;
+    ```
+
+5. Using the `DECODE` function, write a query that displays the grade of all employees based on the value of the
+   column ***JOB_ID***, using the following data:
+   ```sql
+   SELECT job_id,
+          decode(job_id,
+                 'AD_PRES',  'A',
+                 'ST_MAN',   'B',
+                 'IT_PROG',  'C',
+                 'SA_REP',   'D',
+                 'ST_CLERL', 'E', 0) grade
+   FROM employees;
+    ```
+
+6. Rewrite the statement in the preceding exercise using the `CASE` syntax.
+   ```sql
+   SELECT job_id,
+          CASE job_id
+              WHEN 'AD_PRES'  THEN 'A'
+              WHEN 'ST_MAN'   THEN 'B'
+              WHEN 'IT_PROG'  THEN 'C'
+              WHEN 'SA_REP'   THEN 'D'
+              WHEN 'ST_CLERK' THEN 'E'
+              ELSE '0'
+          END grade
+   FROM employees;
     ```
