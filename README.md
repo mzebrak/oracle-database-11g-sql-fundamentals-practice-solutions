@@ -593,3 +593,125 @@ This practice covers the following topics:
    FROM employees
    GROUP BY job_id;
    ```
+
+### Practice 6
+
+This practice covers the following topics:
+> 1. Joining tables using an equijoin
+> 2. Performing outer and self-joins
+> 3. Adding conditions
+
+***
+
+1. Write a query for the HR department to produce the addresses of all the departments. Use the ***LOCATIONS*** and
+   ***COUNTRIES*** tables. Show the location ID, street address, city, state or province, and country in the output. Use
+   a ***NATURAL JOIN*** to produce the results.
+   ```sql
+   SELECT location_id,
+          street_address,
+          city,
+          state_province,
+          country_name
+   FROM locations
+   NATURAL JOIN countries;
+   ```
+
+2. The HR department needs a report of all employees. Write a query to display the last name, department number, and
+   department name for all the employees.
+   ```sql
+   SELECT last_name,
+          department_id,
+          department_name
+   FROM employees
+   JOIN departments USING (department_id);
+   ```
+
+3. The HR department needs a report of employees in Toronto. Display the last name, job, department number, and the
+   department name for all employees who work in Toronto.
+   ```sql
+   SELECT last_name,
+          job_id,
+          department_id,
+          department_name
+   FROM employees
+   JOIN departments USING (department_id)
+   JOIN locations USING (location_id)
+   WHERE city = 'Toronto';
+   ```
+
+4. Create a report to display employees last name and employee number along with their managers last name and manager
+   number. Label the columns ***Employee***, ***Emp#***, ***Manager***, and ***Mgr#***, respectively. Save your SQL
+   statement as `lab_06_04.sql`. Run the query.
+   ```sql
+   SELECT e.last_name   "Employee",
+          e.employee_id "Emp#",
+          m.last_name   "Manager",
+          m.employee_id "Mgr#"
+   FROM employees e
+   JOIN employees m ON (e.manager_id = m.employee_id)
+   ORDER BY e.employee_id;
+   ```
+
+5. Modify `lab_06_04.sql` to display all employees including King, who has no manager. Order the results by the employee
+   number. Save your SQL statement as `lab_06_05.sql`. Run the query in `lab_06_05.sql`.
+   ```sql
+   SELECT e.last_name   "Employee",
+          e.employee_id "Emp#",
+          m.last_name   "Manager",
+          m.employee_id "Mgr#"
+   FROM employees e
+   LEFT JOIN employees m ON (e.manager_id = m.employee_id)
+   ORDER BY e.employee_id;
+   ```
+
+6. Create a report for the HR department that displays employee last names, department numbers, and all the employees
+   who work in the same department as a given employee. Give each column an appropriate label. Save the script to a file
+   named `lab_06_06.sql`.
+   ```sql
+   SELECT e.department_id department,
+          e.last_name     employee,
+          c.last_name     colleague
+   FROM employees e
+   JOIN employees c ON (e.department_id = c.department_id)
+   WHERE e.employee_id <> c.employee_id
+   ORDER BY department,
+            employee,
+            colleague;
+   ```
+
+7. The HR department needs a report on job grades and salaries. To familiarize yourself with the ***JOB_GRADES***
+   table, first show the structure of the ***JOB_GRADES*** table. Then create a query that displays the name, job,
+   department name, salary, and grade for all employees.
+   ```sql
+   SELECT last_name,
+          job_id,
+          department_name,
+          salary,
+          grade_level
+   FROM employees
+   JOIN departments USING (department_id)
+   JOIN job_grades ON (salary BETWEEN lowest_sal AND highest_sal)
+   ORDER BY salary;
+   ```
+
+8. The HR department wants to determine the names of all the employees who were hired after Davies. Create a query to
+   display the name and hire date of any employee hired after employee Davies.
+   ```sql
+   SELECT e.last_name,
+          to_char(e.hire_date, 'DD-MON-YY') hire_date
+   FROM employees e
+   JOIN employees davies ON (davies.last_name = 'Davies')
+   WHERE davies.hire_date < e.hire_date;
+   ```
+
+9. The HR department needs to find the names and hire dates of all the employees who were hired before their managers,
+   along with their managers names and hire dates. Save the script to a file named `lab_06_09.sql`.
+   ```sql
+   SELECT e.last_name,
+          to_char (e.hire_date, 'DD-MON-YY') hire_date,
+          m.last_name,
+          to_char (m.hire_date, 'DD-MON-YY') hire_date1
+   FROM employees e
+   JOIN employees m ON (e.manager_id = m.employee_id)
+   WHERE e.hire_date < m.hire_date;
+   ```
