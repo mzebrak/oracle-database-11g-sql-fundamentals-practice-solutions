@@ -19,7 +19,7 @@
 <idCase>oracle.dbtools.app.Format.Case.lower</idCase>
 <extraLinesAfterSignificantStatements>oracle.dbtools.app.Format.BreaksX2.X2</extraLinesAfterSignificantStatements>
 <breaksConcat>oracle.dbtools.app.Format.Breaks.After</breaksConcat>
-<spaceAroundBrackets>oracle.dbtools.app.Format.Space.Default</spaceAroundBrackets>
+<spaceAroundBrackets>oracle.dbtools.app.Format.Space.Outside</spaceAroundBrackets>
 <flowControl>oracle.dbtools.app.Format.FlowControl.Terse</flowControl>
 <commasPerLine>5</commasPerLine>
 <forceLinebreaksBeforeComment>false</forceLinebreaksBeforeComment>
