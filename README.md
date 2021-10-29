@@ -480,3 +480,116 @@ This practice covers the following topics:
           END grade
    FROM employees;
     ```
+
+### Practice 5
+
+This practice covers the following topics:
+> 1. Writing queries that use the group functions
+> 2. Grouping by rows to achieve more than one result
+> 3. Restricting groups by using the `HAVING` clause
+
+***
+
+1. Group functions work across many rows to produce one result per group.
+
+   **Answer:** True
+
+
+2. Group functions include nulls in calculations.
+
+   **Answer:** False
+
+
+3. The `WHERE` clause restricts rows before inclusion in a group calculation.
+
+   **Answer:** True
+
+
+4. Find the highest, lowest, sum, and average salary of all employees. Label the columns as ***Maximum***, ***Minimum***
+   , ***Sum***, and ***Average***, respectively. Round your results to the nearest whole number. Save your SQL statement
+   as `lab_05_04.sql`. Run the query.
+   ```sql
+   SELECT round(MAX(salary)) "Maximum",
+          round(MIN(salary)) "Minimum",
+          round(SUM(salary)) "Sum",
+          round(AVG(salary)) "Average"
+   FROM employees;
+   ```
+
+5. Modify the query in `lab_05_04.sql` to display the minimum, maximum, sum, and average salary for each job type.
+   Resave `lab_05_04.sql` as `lab_05_05.sql`. Run the statement in `lab_05_05.sql`.
+   ```sql
+   SELECT job_id,
+          round(MAX(salary)) "Maximum",
+          round(MIN(salary)) "Minimum",
+          round(SUM(salary)) "Sum",
+          round(AVG(salary)) "Average"
+   FROM employees
+   GROUP BY job_id;
+   ```
+
+6. Write a query to display the number of people with the same job.
+   ```sql
+   SELECT job_id,
+          COUNT(*)
+   FROM employees
+   GROUP BY job_id;
+   ```
+   Generalize the query so that the user in the HR department is prompted for a job title. Save the script to a file
+   named `lab_05_06.sql`. Run the query. Enter ***IT_PROG*** when prompted.
+   ```sql
+   SELECT job_id,
+          COUNT(*)
+   FROM employees
+   WHERE job_id = upper('&job_id')
+   GROUP BY job_id;
+   ```
+7. Determine the number of managers without listing them. Label the column as ***Number of Managers***. Hint: Use
+   the ***MANAGER_ID*** column to determine the number of managers.
+   ```sql
+   SELECT COUNT(DISTINCT manager_id) "Number of Managers"
+   FROM employees;
+   ```
+
+8. Find the difference between the highest and lowest salaries. Label the column ***DIFFERENCE***.
+   ```sql
+   SELECT MAX(salary) - MIN(salary) difference
+   FROM employees;
+   ```
+
+9. Create a report to display the manager number and the salary of the lowest-paid employee for that manager. Exclude
+   anyone whose manager is not known. Exclude any groups where the minimum salary is $6,000 or less. Sort the output in
+   descending order of salary.
+   ```sql
+   SELECT manager_id,
+          MIN(salary)
+   FROM employees
+   WHERE manager_id IS NOT NULL
+   GROUP BY manager_id
+   HAVING MIN(salary) > 6000
+   ORDER BY MIN(salary) DESC;
+   ```
+
+10. Create a query to display the total number of employees and, of that total, the number of employees hired in 1995,
+    1996, 1997, and 1998. Create appropriate column headings.
+   ```sql
+   SELECT COUNT(*)                                             total,
+          COUNT(decode(to_char(hire_date, 'YYYY'), 1995, '1')) "1995",
+          COUNT(decode(to_char(hire_date, 'YYYY'), 1996, '1')) "1996",
+          COUNT(decode(to_char(hire_date, 'YYYY'), 1997, '1')) "1997",
+          COUNT(decode(to_char(hire_date, 'YYYY'), 1999, '1')) "1999"
+   FROM employees;
+   ```
+
+11. Create a matrix query to display the job, the salary for that job based on department number, and the total salary
+    for that job, for departments 20, 50, 80, and 90, giving each column an appropriate heading.
+   ```sql
+   SELECT DISTINCT (job_id)                               "Job",
+                   SUM(decode(department_id, 20, salary)) "Dept 20",
+                   SUM(decode(department_id, 50, salary)) "Dept 50",
+                   SUM(decode(department_id, 80, salary)) "Dept 80",
+                   SUM(decode(department_id, 90, salary)) "Dept 90",
+                   SUM(salary)                            total
+   FROM employees
+   GROUP BY job_id;
+   ```
