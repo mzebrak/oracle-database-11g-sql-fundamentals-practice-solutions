@@ -822,3 +822,90 @@ This practice covers the following topics:
       WHERE last_name LIKE '%u%'
    );
    ```
+
+## Practice 8
+
+In this practice, you create reports by using:
+> 1. The `UNION` operator
+> 2. The `INTERSECTION` operator
+> 3. The `MINUS` operator
+
+***
+
+1. The HR department needs a list of department IDs for departments that do not contain the job ID ***ST_CLERK***. Use
+   the set operators to create this report.
+   ```sql
+   SELECT department_id
+   FROM departments
+   MINUS
+   SELECT department_id
+   FROM departments
+   WHERE department_name = 'ST_CLERK';
+   ```
+
+2. The HR department needs a list of countries that have no departments located in them. Display the country ID and the
+   name of the countries. Use the set operators to create this report.
+   ```sql
+   SELECT country_id,
+          country_name
+   FROM countries
+   MINUS
+   SELECT country_id,
+          country_name
+   FROM countries
+   JOIN locations USING (country_id);
+   ```
+
+3. Produce a list of jobs for departments 10, 50, and 20, in that order. Display the job ID and department ID by using
+   the set operators.
+   ```sql
+   COLUMN ord NOPRINT;
+   SELECT job_id,
+          department_id,
+          1 ord
+   FROM employees
+   WHERE department_id = 10
+   UNION
+   SELECT job_id,
+          department_id,
+          3 ord
+   FROM employees
+   WHERE department_id = 20
+   UNION
+   SELECT job_id,
+          department_id,
+          2 ord
+   FROM employees
+   WHERE department_id = 50
+   ORDER BY ord;
+   ```
+
+4. Create a report that lists the employee IDs and job IDs of those employees who currently have a job title that is the
+   same as their job title when they were initially hired by the company (that is, they changed jobs but have now gone
+   back to doing their original job).
+   ```sql
+   SELECT employee_id,
+          job_id
+   FROM employees
+   INTERSECT
+   SELECT employee_id,
+          job_id
+   FROM job_history;
+   ```
+
+5. The HR department needs a report with the following specifications:
+    - Last name and department ID of all employees from the ***EMPLOYEES*** table, regardless of whether or not they
+      belong to a department
+    - Department ID and department name of all departments from the ***DEPARTMENTS*** table, regardless of whether or
+      not they have employees working in them Write a compound query to accomplish this.
+   ```sql
+   SELECT last_name,
+          department_id,
+          to_char(NULL)
+   FROM employees
+   UNION
+   SELECT to_char(NULL),
+          department_id,
+          department_name
+   FROM departments;
+   ```
