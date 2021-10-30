@@ -994,12 +994,12 @@ This practice covers the following topics:
    ```
 
 10. Change the last name of employee 3 to Drexler.
-   ```sql
-   UPDATE my_employee
-   SET
-       last_name = 'Drexler'
-   WHERE id = 3;
-   ```
+    ```sql
+    UPDATE my_employee
+    SET
+        last_name = 'Drexler'
+    WHERE id = 3;
+    ```
 
 11. Change the salary to $1,000 for all employees who have a salary less than $900.
     ```sql
@@ -1102,7 +1102,7 @@ This practice covers the following topics:
 25. Run the script, to insert the following record.
     > ***AS ABOVE***
 
-26. Confirm that the new row was added ro with correct ***USERID***.
+26. Confirm that the new row was added with correct ***USERID***.
     ```sql
     SELECT *
     FROM my_employee
