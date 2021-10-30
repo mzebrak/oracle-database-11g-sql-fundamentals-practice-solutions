@@ -909,3 +909,202 @@ In this practice, you create reports by using:
           department_name
    FROM departments;
    ```
+
+## Practice 9
+
+This practice covers the following topics:
+> 1. Inserting rows into the tables
+> 2. Updating and deleting rows in the table
+> 3. Controlling transactions
+
+***
+
+1. Run the statement in the `lab_09_01.sql` script to build the table used in this practice.
+   ```sql
+   CREATE TABLE my_employee (
+       id         NUMBER (4) NOT NULL,
+       last_name  VARCHAR2 (25),
+       first_name VARCHAR (25),
+       userid     VARCHAR2 (8),
+       salary     NUMBER (9, 2)
+   );
+   ```
+
+2. Describe the structure of the ***MY_EMPLOYEE*** table to identify the column names.
+   ```sql
+   DESCRIBE my_employee;
+   ```
+
+3. Create an `INSERT` statement to add the first row of data to the ***MY_EMPLOYEE*** table from the following sample
+   data. Do not list the columns in the `INSERT` clause. Do not enter all rows yet.
+   ```sql
+   INSERT INTO my_employee VALUES (
+       1,
+       'Patel',
+       'Ralph',
+       'rpatel',
+       895
+   );
+   ```
+
+4. Populate the ***MY_EMPLOYEE*** table with the second row of the sample data from the preceding list. This time, list
+   the columns explicitly in the `INSERT` clause.
+   ```sql
+   INSERT INTO my_employee VALUES (
+       2,
+       'Dancs',
+       'Betty',
+       'bdancs',
+       860
+   );
+   ```
+
+5. Confirm your addition to the table.
+   ```sql
+   SELECT *
+   FROM my_employee;
+   ```
+
+6. Write an `INSERT` statement in a dynamic reusable script file to load the remaining rows into the
+   ***MY_EMPLOYEE*** table. The script should prompt for all the columns (***ID***, ***LAST_NAME***,
+   ***FIRST_NAME***, ***USERID*** and ***SALARY***). Save this script to a `lab_09_06.sql` file.
+   ```sql
+   INSERT INTO my_employee VALUES (
+       &id,
+       '&last_name',
+       '&first_name',
+       '&userid',
+       &salary
+   );
+   ```
+
+7. Populate the table with the next two rows of the sample data listed in step 3 by running the `INSERT` statement in
+   the script that you created.
+   > ***AS ABOVE***
+
+8. Confirm your additions to the table.
+   ```sql
+   SELECT *
+   FROM my_employee;
+   ```
+
+9. Make the data additions permanent.
+   ```sql
+   COMMIT;
+   ```
+
+10. Change the last name of employee 3 to Drexler.
+   ```sql
+   UPDATE my_employee
+   SET
+       last_name = 'Drexler'
+   WHERE id = 3;
+   ```
+
+11. Change the salary to $1,000 for all employees who have a salary less than $900.
+    ```sql
+    UPDATE my_employee
+    SET
+        salary = 1000
+    WHERE salary < 900;
+    ```
+
+12. Verify your changes to the table.
+    ```sql
+    SELECT *
+    FROM my_employee;
+    ```
+
+13. Delete Betty Dancs from the ***MY_EMPLOYEE*** table.
+    ```sql
+    DELETE FROM my_employee
+    WHERE first_name = 'Betty'
+          AND last_name = 'Dancs';
+    ```
+
+14. Confirm your changes to the table.
+    ```sql
+    SELECT *
+    FROM my_employee;
+    ```
+
+15. Commit all pending changes.
+    ```sql
+    COMMIT;
+    ```
+
+16. Populate the table with the last row of the sample data listed in step 3 by using the statements in the script that
+    you created in step 6. Run the statements in the script.
+    ```sql
+    INSERT INTO my_employee VALUES (
+       &id,
+       '&last_name',
+       '&first_name',
+       '&userid',
+       &salary
+    );
+    ```
+
+17. Confirm your addition to the table.
+    ```sql
+    SELECT *
+    FROM my_employee;
+    ```
+
+18. Mark an intermediate point in the processing of the transaction.
+    ```sql
+    SAVEPOINT s17;
+    ```
+
+19. Delete all the rows from the ***MY_EMPLOYEE*** table.
+    ```sql
+    DELETE FROM my_employee;
+    ```
+
+20. Confirm that the table is empty.
+    ```sql
+    SELECT *
+    FROM my_employee;
+    ```
+
+21. Discard the most recent `DELETE` operation without discarding the earlier `INSERT` operation.
+    ```sql
+    ROLLBACK TO s17;
+    ```
+
+22. Confirm that the new row is still intact.
+    ```sql
+    SELECT *
+    FROM my_employee;
+    ```
+
+23. Make the data addition permanent.
+    ```sql
+    COMMIT;
+    ```
+
+24. Modify the `lab_09_06.sql` script such that the ***USERID*** is generated automatically by concatenating the first
+    letter of the first name and the first seven characters of the last name. The generated ***USERID*** must be in
+    lowercase. Hence, the script should not prompt for the ***USER***. Save this script to a file named `lab_09_24.sql`.
+    ```sql
+    INSERT INTO my_employee VALUES (
+        &id,
+        '&&last_name',
+        '&&first_name',
+        lower (substr ('&first_name', 1, 1) ||
+               substr ('&last_name', 1, 7)),
+        &salary
+    );
+    UNDEFINE last_name;
+    UNDEFINE first_name;
+    ```
+
+25. Run the script, to insert the following record.
+    > ***AS ABOVE***
+
+26. Confirm that the new row was added ro with correct ***USERID***.
+    ```sql
+    SELECT *
+    FROM my_employee
+    WHERE id = 6;
+    ```
