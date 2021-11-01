@@ -2,7 +2,7 @@
 
 My solutions to the **Oracle Database 11g: SQL Fundamentals** practice tasks
 
-Feel free to use and if u have any suggestions don't hesitate to contact me . 😃
+Feel free to use and if u have any suggestions don't hesitate to contact me. 😃
 
 ## Content
 
@@ -16,5 +16,7 @@ Feel free to use and if u have any suggestions don't hesitate to contact me . �
 > - [Practice 7](Fundamentals%201#practice-7)
 > - [Practice 8](Fundamentals%201#practice-8)
 > - [Practice 9](Fundamentals%201#practice-9)
+> - [Practice 10](Fundamentals%201#practice-10)
+> - [Practice 11](Fundamentals%201#practice-11)
 
 ***

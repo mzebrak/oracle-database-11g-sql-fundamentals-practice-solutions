@@ -1108,3 +1108,97 @@ This practice covers the following topics:
     FROM my_employee
     WHERE id = 6;
     ```
+
+## Practice 10
+
+This practice covers the following topics:
+> 1. Creating new tables
+> 2. Creating a new table by using the `CREATE TABLE AS` syntax
+> 3. Verifying that tables exist
+> 4. Setting a table to read-only status
+> 5. Dropping tables
+
+***
+
+1. Create the ***DEPT*** table based on the following table instance chart. Save the statement in a script
+   called `lab_10_01.sql`, and then execute the statement in the script to create the table. Confirm that the table is
+   created.
+   ```sql
+   CREATE TABLE dept (
+       id   NUMBER (7) PRIMARY KEY NOT NULL,
+       name VARCHAR (25)
+   )
+   DESCRIBE dept;
+   ```
+
+2. Populate the ***DEPT*** table with data from the ***DEPARTMENTS*** table. Include only columns that you need.
+   ```sql
+   INSERT INTO dept
+       SELECT department_id,
+              department_name
+       FROM departments;
+   ```
+
+3. Create the ***EMP*** table based on the following table instance chart. Save the statement in a script
+   called `lab_10_03.sql`, and then execute the statement in the script to create the table. Confirm that the table is
+   created.
+   ```sql
+   CREATE TABLE emp (
+       id        NUMBER (7),
+       last_name VARCHAR2 (25),
+       firs_name VARCHAR (25),
+       dept_id   NUMBER (7)
+           REFERENCES dept (id)
+   )
+   DESCRIBE emp;
+   ```
+
+4. Create the ***EMPLOYEES2*** table based on the ***EMPLOYEES*** structure of the table. Include only the
+   ***EMPLOYEE_ID***, ***FIRST_NAME***, ***LAST_NAME***, ***SALARY***, and ***DEPARTMENT_ID*** columns. Name the columns
+   in your new table ***ID***, ***FIRST_NAME***, ***LAST_NAME***, ***SALARY***, and ***DEPT_ID***, respectively.
+   ```sql
+   CREATE TABLE employees2
+       AS
+           SELECT employee_id   id,
+                  first_name,
+                  last_name,
+                  salary,
+                  department_id dept_id
+           FROM employees;
+   ```
+
+5. Alter the ***EMPLOYEES2*** table status to read-only.
+   ```sql
+   ALTER TABLE employees2 READ ONLY;
+   ```
+
+6. Try to insert the following row in the ***EMPLOYEES2*** table.
+   ```sql
+   INSERT INTO employees2 VALUES (
+       34,
+       'Grant',
+       'Marcie',
+       5678,
+       10
+   );
+   ```
+
+7. Revert the ***EMPLOYEES2*** table to the read/write status. Now, try to insert the same row again. You should get the
+   following messages.
+   ```sql
+   ALTER TABLE employees2 READ WRITE;
+   INSERT INTO employees2 VALUES (
+       34,
+       'Grant',
+       'Marcie',
+       5678,
+       10
+   );
+   ```
+
+8. Drop the ***EMPLOYEES2*** table.
+   ```sql
+   DROP TABLE employees2;
+   ```
+
+## Practice 11
