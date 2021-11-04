@@ -839,8 +839,8 @@ In this practice, you create reports by using:
    FROM departments
    MINUS
    SELECT department_id
-   FROM departments
-   WHERE department_name = 'ST_CLERK';
+   FROM employees
+   WHERE job_id = 'ST_CLERK';
    ```
 
 2. The HR department needs a list of countries that have no departments located in them. Display the country ID and the
@@ -1202,3 +1202,110 @@ This practice covers the following topics:
    ```
 
 ## Practice 11
+
+This practice covers the following topics:
+> _**Part 1:**_
+>
+> 1. Creating a simple view
+> 2. Creating a complex view
+> 3. Creating a view with a check constraint
+> 4. Attempting to modify data in the view
+> 5. Removing views
+>
+> _**Part 2:**_
+>
+> 1. Creating sequences
+> 2. Using sequences
+> 3. Creating nonunique indexes
+> 4. Creating synonyms
+
+***
+
+1. The staff in the HR department wants to hide some of the ***EMPLOYEES*** data in the table. They want a view
+   called ***EMPLOYEES_VU*** based on the employee numbers, employee names, and department numbers from the ***
+   EMPLOYEES*** table. They want the heading for the employee name to be ***EMPLOYEES***.
+   ```sql
+   CREATE VIEW employees_vu AS
+       SELECT employee_id,
+              first_name employee,
+              department_id
+       FROM employees;
+   ```
+
+2. Confirm that the view works. Display the contents of the ***EMPLOYEES_VU*** view.
+   ```sql
+   SELECT *
+   FROM employees_vu;
+   ```
+
+3. Using your ***EMPLOYEES_VU*** view, write a query for the HR department to display all employee names and department
+   numbers.
+   ```sql
+   SELECT employee,
+          department_id
+   FROM employees_vu;
+   ```
+
+4. Department 50 needs access to its employee data. Create a view named ***DEPT50*** that contains the employee numbers,
+   employee last names, and department numbers for all employees in department 50. You have been asked to label the view
+   columns ***EMPNO***, ***EMPLOYEE***, and ***DEPTNO***. For security purposes, do not allow an employee to be
+   reassigned to another department through the view.
+   ```sql
+   CREATE VIEW dept50 AS
+       SELECT employee_id   empno,
+              first_name    employee,
+              department_id deptno
+       FROM employees
+       WHERE department_id = 50
+   WITH CHECK OPTION CONSTRAINT dept50_ck;
+   ```
+
+5. Display the structure and contents of the ***DEPT50*** view.
+   ```sql
+   DESCRIBE dept50;
+   SELECT *
+   FROM dept50;
+   ```
+
+6. Test your view. Attempt to reassign Matos to department 80.
+   ```sql
+   UPDATE dept50
+   SET
+       deptno = 80
+   WHERE employee = 'Matos';
+   ```
+
+7. You need a sequence that can be used with the ***PRIMARY KEY*** column of the ***DEPT*** table. The sequence should
+   start at 200 and have a maximum value of 1,000. Have your sequence increment by 10. Name the sequence ***
+   DEPT_ID_SEQ***.
+   ```sql
+   CREATE SEQUENCE dept_id_seq
+                   INCREMENT BY 10
+                   START WITH 200
+                   MAXVALUE 1000;
+   ```
+
+8. To test your sequence, write a script to insert two rows in the ***DEPT*** table. Name your script `lab_11_08.sql``.
+   Be sure to use the sequence that you created for the ID column. Add two departments: Education and Administration.
+   Confirm your additions. Run the commands in your script.
+   ```sql
+   INSERT INTO dept VALUES (
+          departments_seq.NEXTVAL,
+          'Education'
+   );
+   
+   INSERT INTO dept VALUES (
+         departments_seq.NEXTVAL,
+         'Administration'
+   );
+   ```
+
+9. Create a nonunique index on the ***NAME*** column in the ***DEPT*** table.
+   ```sql
+   CREATE INDEX dept_name_ix ON dept(name);
+   ```
+
+10. Create a synonym for your ***EMPLOYEES*** table. Call it ***EMP***.
+   ```sql
+   CREATE SYNONYM emp FOR employees;
+   ```
