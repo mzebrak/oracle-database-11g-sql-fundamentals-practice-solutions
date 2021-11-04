@@ -1301,6 +1301,6 @@ This practice covers the following topics:
    ```
 
 10. Create a synonym for your ***EMPLOYEES*** table. Call it ***EMP***.
-   ```sql
-   CREATE SYNONYM emp FOR employees;
-   ```
+    ```sql
+    CREATE SYNONYM emp FOR employees;
+    ```
