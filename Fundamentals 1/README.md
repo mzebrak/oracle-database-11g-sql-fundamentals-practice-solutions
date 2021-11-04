@@ -859,25 +859,20 @@ In this practice, you create reports by using:
 3. Produce a list of jobs for departments 10, 50, and 20, in that order. Display the job ID and department ID by using
    the set operators.
    ```sql
-   COLUMN ord NOPRINT;
-   SELECT job_id,
-          department_id,
-          1 ord
+   SELECT DISTINCT job_id,
+                   department_id
    FROM employees
    WHERE department_id = 10
-   UNION
-   SELECT job_id,
-          department_id,
-          3 ord
-   FROM employees
-   WHERE department_id = 20
-   UNION
-   SELECT job_id,
-          department_id,
-          2 ord
+   UNION ALL
+   SELECT DISTINCT job_id,
+                   department_id
    FROM employees
    WHERE department_id = 50
-   ORDER BY ord;
+   UNION ALL
+   SELECT DISTINCT job_id,
+                   department_id
+   FROM employees
+   WHERE department_id = 20;
    ```
 
 4. Create a report that lists the employee IDs and job IDs of those employees who currently have a job title that is the
